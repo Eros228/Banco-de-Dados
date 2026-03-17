@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador de Números</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Jogo do Número Aleatório</h1>
+        <p>Escolha um número entre 1 e 60:</p>
+        <input type="number" id="userNumber" min="1" max="60" placeholder="Digite seu número">
+        <button id="submitBtn">Chutar</button>
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+        // Sorteia um número aleatório entre 1 e 60
+        const numeroSorteado = Math.floor(Math.random() * 60) + 1;
+        let tentativas = 0;
+
+        const submitBtn = document.getElementById('submitBtn');
+        const userNumberInput = document.getElementById('userNumber');
+        const feedback = document.getElementById('feedback');
+
+        submitBtn.addEventListener('click', () => {
+            const userNumber = parseInt(userNumberInput.value);
+            tentativas++;
+
+            if (isNaN(userNumber) || userNumber < 1 || userNumber > 60) {
+                feedback.textContent = "Por favor, digite um número válido entre 1 e 60.";
+                return;
+            }
+
+            if (userNumber === numeroSorteado) {
+                feedback.textContent = `Parabéns, você acertou! Número de tentativas: ${tentativas}`;
+                submitBtn.disabled = true;
+                userNumberInput.disabled = true;
+            } else if (userNumber < numeroSorteado) {
+                feedback.textContent = `Número errado, o número sorteado está acima de ${userNumber}`;
+            } else {
+                feedback.textContent = `Número errado, o número sorteado está abaixo de ${userNumber}`;
+            }
+
+            userNumberInput.value = '';
+            userNumberInput.focus();
+        });
+    </script>
+</body>
+</html>
